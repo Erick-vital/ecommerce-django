@@ -1,0 +1,23 @@
+{% extends 'main.html' %}
+{% load static%}
+{% block content%}
+<!-- Recuerda que las clases que estamos usando son 'bootstrap'
+y por eso su comportamiento, incluso tambien el la imagenes, class="thumbnail-->
+<div class="row">
+    {% for producto in productos %}
+    <div class="col-lg-4">
+        <img class="thumbnail" src="{{ producto.imagen.url }}" alt="">        
+        <div class="box-element product">
+            <h6><strong>{{producto.name}}</strong></h6>
+            <hr>
+
+            <!--  El atributo 'data-producto', es un atributo data, que se usa para crear atributos privados-->
+            <button data-producto="{{ producto.id }}"  data-action="add" class="btn btn-outline-secondary add-btn update-carrito"
+            >Agregar al carrito</button>
+            <a class="btn btn-outline-success" href="#">View</a>
+            <h4 style="display: inline-block; float: right"><strong>${{ producto.precio | floatformat:2 }}</strong></h4>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}

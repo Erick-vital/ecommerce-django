@@ -1,0 +1,62 @@
+{% extends 'main.html' %}
+{% load static%}
+{% block content%}
+<div class="row">
+    <div class="col-lg-12">
+
+        <div class="box-element">
+            <a class="btn btn-outline-dark" href="{% url 'tienda' %}">&#x2190; Sigue Comprando</a>
+            <br>
+            <br>
+            <table class="table">
+                <tr>
+                    <th>
+                        <h5>Items: <strong>{{ pedido.get_carrito_items }}</strong></h5>
+                    </th>
+                    <th>
+                        <h5>Total: <strong>${{ pedido.get_carrito_total | floatformat:2 }}</strong></h5>
+                    </th>
+                    <th>
+                        <a style="float: right; margin: 5px;" class="btn btn-success" href="{% url 'checkout' %}">
+                            Checkout</a>
+                    </th>
+                </tr>
+            </table>
+        </div>
+        <br>
+
+        <div class="box-element">
+            <div class="cart-row">
+                <div style="flex: 2;"></div>
+                <div style="flex: 2;"><strong>Item</strong></div>
+                <div style="flex: 1;"><strong>Precio</strong></div>
+                <div style="flex: 1;"><strong>Cantidad</strong></div>
+                <div style="flex: 1;"><strong>Total</strong></div>
+            </div>
+
+            {% for item in items %}
+            <div class="cart-row">
+                <div style="flex: 2;"><img class="row-image" src="{{ item.producto.imagen_url }}" alt=""
+                        class="row-image"></div>
+                <div style="flex: 2;">
+                    <p>{{ item.producto.name }}</p>
+                </div>
+                <div style="flex: 1;">
+                    <p>$ {{ item.producto.precio | floatformat:2 }}</p>
+                </div>
+                <div style="flex: 1;">
+                    <p class="quantity">{{ item.cantidad }}</p>
+                    <div class="quantity">
+                        <img data-producto="{{ item.producto.id }}" data-action="add"
+                            class="chg-quantity update-carrito" src="{% static 'images/arrow-up.png' %}" alt="">
+                        <img data-producto="{{ item.producto.id }}" data-action="remove"
+                            class="chg-quantity update-carrito" src="{% static 'images/arrow-down.png' %}" alt="">
+                    </div>
+                </div>
+                <div style="flex: 1;">$ {{ item.get_total }}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

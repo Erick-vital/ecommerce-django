@@ -1,0 +1,68 @@
+{% extends 'main.html' %}
+{% load static%}
+{% block content%}
+<!-- Formulario -->
+<div class="row">
+    <div class="col-lg-6">
+        <dov class="box-element" id="form-wrapper">
+            <form action="" id="form">
+                <div id="user-info">
+                    <div class="form-field">
+                        <input type="text" class="form-control" name="name" placeholder="Nombre..">
+                    </div>
+                    <div class="form-field">
+                        <input type="text" class="form-control" name="email" placeholder="Email..">
+                    </div>
+                </div>
+                <div id="shipping-info">
+                    <hr>
+                    <p>Informacion De Envio</p>
+                    <div class="form-field">
+                        <input type="text" class="form-control" name="direccion" placeholder="Direccion">
+                    </div>
+                    <div class="form-field">
+                        <input type="text" class="form-control" name="ciudad" placeholder="Ciudad">
+                    </div>
+                    <div class="form-field">
+                        <input type="text" class="form-control" name="estado" placeholder="Estado">
+                    </div>
+                    <div class="form-field">
+                        <input type="text" class="form-control" name="codigo postal" placeholder="Codigo postal">
+                    </div>
+                    <div class="form-field">
+                        <input type="text" class="form-control" name="pais" placeholder="Pais">
+                    </div>
+                </div>
+                <hr>
+                <input id="form-button" class="btn btn-success btn-block" type="submit" value="Siguiente">
+            </form>
+        </dov>
+    </div>
+
+    <br>
+    <div class="box-element hidden" id="payment-info">
+        <small>Paypal Options</small>
+    </div>
+
+    <div class="col-lg-6">
+        <dov class="box-element">
+            <a  class="btn btn-outline-dark" href="{% url 'carrito' %}">&#x2190; Back to Cart</a>
+            <hr>
+            <h3>Order Summary</h3>
+            <hr>
+
+            {% for item in items %}
+            <div class="cart-row">
+                <div style="flex:2"><img class="row-image" src="{{ item.producto.imagen_url }}"></div>
+                <div style="flex:2"><p>{{ item.producto.name }}</p></div>
+                <div style="flex:1"><p>${{ item.producto.precio }}</p></div>
+                <div style="flex:1"><p>{{ item.cantidad }}</p></div>
+            </div>
+            {% endfor %}
+
+            <h5>Items:   {{ pedido.get_carrito_items }}</h5>
+            <h5>Total:   {{ pedido.get_carrito_total | floatformat:2 }}</h5>
+        </dov>
+    </div>
+</div>
+{% endblock content %}
